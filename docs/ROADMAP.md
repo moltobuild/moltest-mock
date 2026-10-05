@@ -18,7 +18,7 @@
 - [x] CI on Linux (gcc), macOS (clang), Windows (MSYS2 gcc), as moltest-coverage's (KI-1), molto 0.49.0
 - [x] E2E: a default (C17) `molto new` library that mocks two functions of another library
 - [x] Release by tag (release.yml, `.github/check-version.sh`)
-- [ ] CI green on all three platforms; KI-1 closed
+- [x] CI green on all three platforms; KI-1 closed
 - [ ] Release 0.1.0 (tag v0.1.0)
 
 ## Non-goals

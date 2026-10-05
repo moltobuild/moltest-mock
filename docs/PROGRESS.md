@@ -12,4 +12,5 @@
   C17 `molto new` library, release by tag; KI-2 fixed (mocks did not compile in C17)
 - Commit: 1c76238 (fix), see git log for CI
 - Tests: 17 self-tests pass; e2e passes locally and fails on the pre-fix header
-- Next: CI green on the three platforms (KI-1), tag v0.1.0
+- CI: all green on Linux, macOS, Windows; GCC without warnings (KI-1 closed)
+- Next: merge PR #1, tag v0.1.0

@@ -1,10 +1,11 @@
 # Known issues
 
-## KI-1 GCC untested — Status: Open
+## KI-1 GCC untested — Status: Resolved
 - Repro: build and test with GCC (`-std=c2x -Wpedantic`); only Apple clang has run so far.
 - Risk: `__VA_OPT__` and a variadic macro called with no variadic arguments
   (`MOCK_VALUE_FUNC(int, now)`) are C23; older GCC in `-std=c2x` may warn.
-- Expected: no warnings on GCC 12+. To be closed by the M2 CI matrix (Test and E2E on Linux and Windows run GCC).
+- Expected: no warnings on GCC 12+.
+- Resolved: PR #1's CI, GCC on Linux and MSYS2: self-tests (C2x, `-Wpedantic`) and e2e (C17) build with no warnings.
 
 ## KI-2 Mocks did not compile in C17 — Status: Resolved
 - Repro: `molto new` (C17 by default), add moltest-mock, define any mock.
