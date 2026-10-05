@@ -2,7 +2,7 @@
 # Consumers add it with `molto add git+https://github.com/moltobuild/moltest-mock --dev`.
 [package]
 name = "moltest_mock"
-version = "0.2.0"
+version = "0.2.1"
 description = "Fake functions for C suites run by moltest"
 repository = "https://github.com/moltobuild/moltest-mock"
 license = "Apache-2.0"
