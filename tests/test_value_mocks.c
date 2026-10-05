@@ -6,6 +6,8 @@
 MOCK_VALUE_FUNC(int, read_file, const char *);
 MOCK_VALUE_FUNC(int, now);
 MOCK_VALUE_FUNC(long, six, int, int, int, int, int, long);
+MOCK_VALUE_FUNC(int, seven, int, int, int, int, int, int, int);
+MOCK_VALUE_FUNC(long, twelve, int, int, int, int, int, int, int, int, int, int, int, long);
 
 /* The code under test: calls read_file across a boundary it does not own. */
 static int load_config(const char *path) {
@@ -78,4 +80,20 @@ DESCRIBE(mocks_take_zero_to_six_arguments) {
     EXPECT_EQ(1, six_mock.arg0_val);
     EXPECT_EQ(5, six_mock.arg4_val);
     EXPECT_EQ(60, (int)six_mock.arg5_history[0]);
+}
+
+DESCRIBE(value_mocks_take_up_to_twelve_arguments) {
+    /* spec 002 AC1, AC4: source_fetch in molto takes eight. */
+    EXPECT_EQ(12, MOLTEST_MOCK_ARGS_MAX);
+    seven_mock.return_val = 7;
+    twelve_mock.return_val = 12;
+    EXPECT_EQ(7, seven(1, 2, 3, 4, 5, 6, 70));
+    EXPECT_EQ(12, (int)twelve(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 120L));
+    EXPECT_EQ(70, seven_mock.arg6_val);
+    EXPECT_EQ(7, twelve_mock.arg6_val);
+    EXPECT_EQ(9, twelve_mock.arg8_val);
+    EXPECT_EQ(11, twelve_mock.arg10_val);
+    EXPECT_EQ(120, (int)twelve_mock.arg11_val);
+    EXPECT_EQ(120, (int)twelve_mock.arg11_history[0]);
+    EXPECT_EQ(1, (int)twelve_mock.call_count);
 }

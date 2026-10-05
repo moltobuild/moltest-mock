@@ -31,6 +31,10 @@
 - [x] ADR 0003 Accepted, KI-3 resolved, README "Mocking real code"
 - [ ] Release 0.3.0
 
+## M4 - Twelve arguments (spec 002)
+- [x] Mocks of up to 12 arguments (molto's `source_fetch` takes 8)
+- [ ] Release 0.4.0
+
 ## Non-goals
 - gmock-style expectations declared before the call (ADR 0002).
 - Link-time interposition (`--wrap`, weak symbols): not portable (ADR 0002).
@@ -43,5 +47,4 @@
 - Automatic verification at test end: needs a pre-verdict hook in moltest (moltest ADR, then here)
 - C++: compile-tested header, `extern "C"` mocks from C++ tests
 - `MOCK_VALUE_FUNC(int, now, void)` so a no-argument mock is `-Wpedantic` clean before C23
-- More than 6 arguments
 - Thread-safe call recording (atomics or a lock per mock)

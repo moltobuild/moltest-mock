@@ -14,7 +14,7 @@ define `name` itself plus a `name_mock` struct with `call_count`,
 `argN_val`, `argN_history[]`, `history_dropped`, `return_val`, `return_seq`
 and `custom_fake`. The test configures the struct and checks it with
 moltest's ordinary EXPECT_*. `MOCK_DECLARE_*` / `MOCK_DEFINE_*` split a mock
-between a header and one file. Arity is counted with C23 `__VA_OPT__`, 0 to 6.
+between a header and one file. Arity is counted with C23 `__VA_OPT__`, 0 to 6; 0 to 12 since spec 002.
 
 ## Alternatives considered
 - **gmock-style expectations** (`EXPECT_CALL(f).with(x).times(1)`): more

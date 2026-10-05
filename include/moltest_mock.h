@@ -61,7 +61,7 @@
 #endif
 
 /* The most arguments a mocked function can take. */
-#define MOLTEST_MOCK_ARGS_MAX 6
+#define MOLTEST_MOCK_ARGS_MAX 12
 
 /* The most mocks a test binary can have; past it, the run fails (spec 001). */
 #define MOLTEST_MOCK_MAX 512
@@ -113,10 +113,11 @@ void moltest_mock_reset_all(void);
 /* Plumbing                                                             */
 /* ------------------------------------------------------------------ */
 
-/* How many arguments, 0 to 6. `macro` is applied once `n` is a literal, so
+/* How many arguments, 0 to 12. `macro` is applied once `n` is a literal, so
    that it can paste it onto the per-arity helpers below. */
-#define MOLTEST_MOCK_NARG_(...) MOLTEST_MOCK_NTH_(__VA_OPT__(__VA_ARGS__, ) 6, 5, 4, 3, 2, 1, 0)
-#define MOLTEST_MOCK_NTH_(_1, _2, _3, _4, _5, _6, n, ...) n
+#define MOLTEST_MOCK_NARG_(...)                                                                    \
+    MOLTEST_MOCK_NTH_(__VA_OPT__(__VA_ARGS__, ) 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+#define MOLTEST_MOCK_NTH_(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, n, ...) n
 #define MOLTEST_MOCK_APPLY_(macro, n, ...) macro(n, __VA_ARGS__)
 
 /* The parameter list of the fake: `t0 moltest_mock_a0, t1 moltest_mock_a1` */
@@ -129,6 +130,18 @@ void moltest_mock_reset_all(void);
     MOLTEST_MOCK_PARAMS_4(t0, t1, t2, t3), t4 moltest_mock_a4
 #define MOLTEST_MOCK_PARAMS_6(t0, t1, t2, t3, t4, t5)                                              \
     MOLTEST_MOCK_PARAMS_5(t0, t1, t2, t3, t4), t5 moltest_mock_a5
+#define MOLTEST_MOCK_PARAMS_7(t0, t1, t2, t3, t4, t5, t6)                                          \
+    MOLTEST_MOCK_PARAMS_6(t0, t1, t2, t3, t4, t5), t6 moltest_mock_a6
+#define MOLTEST_MOCK_PARAMS_8(t0, t1, t2, t3, t4, t5, t6, t7)                                      \
+    MOLTEST_MOCK_PARAMS_7(t0, t1, t2, t3, t4, t5, t6), t7 moltest_mock_a7
+#define MOLTEST_MOCK_PARAMS_9(t0, t1, t2, t3, t4, t5, t6, t7, t8)                                  \
+    MOLTEST_MOCK_PARAMS_8(t0, t1, t2, t3, t4, t5, t6, t7), t8 moltest_mock_a8
+#define MOLTEST_MOCK_PARAMS_10(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9)                             \
+    MOLTEST_MOCK_PARAMS_9(t0, t1, t2, t3, t4, t5, t6, t7, t8), t9 moltest_mock_a9
+#define MOLTEST_MOCK_PARAMS_11(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10)                        \
+    MOLTEST_MOCK_PARAMS_10(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9), t10 moltest_mock_a10
+#define MOLTEST_MOCK_PARAMS_12(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11)                   \
+    MOLTEST_MOCK_PARAMS_11(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10), t11 moltest_mock_a11
 
 /* The types alone, for custom_fake's signature. */
 #define MOLTEST_MOCK_TYPES_0() void
@@ -138,6 +151,12 @@ void moltest_mock_reset_all(void);
 #define MOLTEST_MOCK_TYPES_4(...) __VA_ARGS__
 #define MOLTEST_MOCK_TYPES_5(...) __VA_ARGS__
 #define MOLTEST_MOCK_TYPES_6(...) __VA_ARGS__
+#define MOLTEST_MOCK_TYPES_7(...) __VA_ARGS__
+#define MOLTEST_MOCK_TYPES_8(...) __VA_ARGS__
+#define MOLTEST_MOCK_TYPES_9(...) __VA_ARGS__
+#define MOLTEST_MOCK_TYPES_10(...) __VA_ARGS__
+#define MOLTEST_MOCK_TYPES_11(...) __VA_ARGS__
+#define MOLTEST_MOCK_TYPES_12(...) __VA_ARGS__
 
 /* The names alone, to pass the arguments on to custom_fake. */
 #define MOLTEST_MOCK_ARGS_0()
@@ -147,6 +166,12 @@ void moltest_mock_reset_all(void);
 #define MOLTEST_MOCK_ARGS_4() MOLTEST_MOCK_ARGS_3(), moltest_mock_a3
 #define MOLTEST_MOCK_ARGS_5() MOLTEST_MOCK_ARGS_4(), moltest_mock_a4
 #define MOLTEST_MOCK_ARGS_6() MOLTEST_MOCK_ARGS_5(), moltest_mock_a5
+#define MOLTEST_MOCK_ARGS_7() MOLTEST_MOCK_ARGS_6(), moltest_mock_a6
+#define MOLTEST_MOCK_ARGS_8() MOLTEST_MOCK_ARGS_7(), moltest_mock_a7
+#define MOLTEST_MOCK_ARGS_9() MOLTEST_MOCK_ARGS_8(), moltest_mock_a8
+#define MOLTEST_MOCK_ARGS_10() MOLTEST_MOCK_ARGS_9(), moltest_mock_a9
+#define MOLTEST_MOCK_ARGS_11() MOLTEST_MOCK_ARGS_10(), moltest_mock_a10
+#define MOLTEST_MOCK_ARGS_12() MOLTEST_MOCK_ARGS_11(), moltest_mock_a11
 
 /* The struct fields that record argument i. */
 #define MOLTEST_MOCK_FIELD_(t, i)                                                                  \
@@ -162,6 +187,18 @@ void moltest_mock_reset_all(void);
     MOLTEST_MOCK_FIELDS_4(t0, t1, t2, t3) MOLTEST_MOCK_FIELD_(t4, 4)
 #define MOLTEST_MOCK_FIELDS_6(t0, t1, t2, t3, t4, t5)                                              \
     MOLTEST_MOCK_FIELDS_5(t0, t1, t2, t3, t4) MOLTEST_MOCK_FIELD_(t5, 5)
+#define MOLTEST_MOCK_FIELDS_7(t0, t1, t2, t3, t4, t5, t6)                                          \
+    MOLTEST_MOCK_FIELDS_6(t0, t1, t2, t3, t4, t5) MOLTEST_MOCK_FIELD_(t6, 6)
+#define MOLTEST_MOCK_FIELDS_8(t0, t1, t2, t3, t4, t5, t6, t7)                                      \
+    MOLTEST_MOCK_FIELDS_7(t0, t1, t2, t3, t4, t5, t6) MOLTEST_MOCK_FIELD_(t7, 7)
+#define MOLTEST_MOCK_FIELDS_9(t0, t1, t2, t3, t4, t5, t6, t7, t8)                                  \
+    MOLTEST_MOCK_FIELDS_8(t0, t1, t2, t3, t4, t5, t6, t7) MOLTEST_MOCK_FIELD_(t8, 8)
+#define MOLTEST_MOCK_FIELDS_10(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9)                             \
+    MOLTEST_MOCK_FIELDS_9(t0, t1, t2, t3, t4, t5, t6, t7, t8) MOLTEST_MOCK_FIELD_(t9, 9)
+#define MOLTEST_MOCK_FIELDS_11(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10)                        \
+    MOLTEST_MOCK_FIELDS_10(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9) MOLTEST_MOCK_FIELD_(t10, 10)
+#define MOLTEST_MOCK_FIELDS_12(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11)                   \
+    MOLTEST_MOCK_FIELDS_11(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10) MOLTEST_MOCK_FIELD_(t11, 11)
 
 /* Store argument i of the current call into mock `m`. */
 #define MOLTEST_MOCK_SAVE_(m, i)                                                                   \
@@ -175,6 +212,12 @@ void moltest_mock_reset_all(void);
 #define MOLTEST_MOCK_SAVE_4(m) MOLTEST_MOCK_SAVE_3(m) MOLTEST_MOCK_SAVE_(m, 3)
 #define MOLTEST_MOCK_SAVE_5(m) MOLTEST_MOCK_SAVE_4(m) MOLTEST_MOCK_SAVE_(m, 4)
 #define MOLTEST_MOCK_SAVE_6(m) MOLTEST_MOCK_SAVE_5(m) MOLTEST_MOCK_SAVE_(m, 5)
+#define MOLTEST_MOCK_SAVE_7(m) MOLTEST_MOCK_SAVE_6(m) MOLTEST_MOCK_SAVE_(m, 6)
+#define MOLTEST_MOCK_SAVE_8(m) MOLTEST_MOCK_SAVE_7(m) MOLTEST_MOCK_SAVE_(m, 7)
+#define MOLTEST_MOCK_SAVE_9(m) MOLTEST_MOCK_SAVE_8(m) MOLTEST_MOCK_SAVE_(m, 8)
+#define MOLTEST_MOCK_SAVE_10(m) MOLTEST_MOCK_SAVE_9(m) MOLTEST_MOCK_SAVE_(m, 9)
+#define MOLTEST_MOCK_SAVE_11(m) MOLTEST_MOCK_SAVE_10(m) MOLTEST_MOCK_SAVE_(m, 10)
+#define MOLTEST_MOCK_SAVE_12(m) MOLTEST_MOCK_SAVE_11(m) MOLTEST_MOCK_SAVE_(m, 11)
 
 /* What every call does before it returns: record the arguments, count. */
 #define MOLTEST_MOCK_RECORD_(n, name)                                                              \

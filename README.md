@@ -43,7 +43,7 @@ Every mock is reset to zero before each test, before its `BEFORE_EACH`.
 - `MOCK_VOID_FUNC(name, types...)` for functions returning `void`.
 - `MOCK_DECLARE_VALUE_FUNC` in a header plus `MOCK_DEFINE_VALUE_FUNC` in one
   file to share a mock between test files (and the `VOID` pair).
-- Up to 6 arguments; typedef function pointer and array types first.
+- Up to 12 arguments; typedef function pointer and array types first.
 
 ## Mocking real code
 

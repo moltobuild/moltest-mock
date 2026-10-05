@@ -45,3 +45,11 @@
   shared suite, since the linker takes src/e2e_lib.c whole; documented
 - Tests: 19 self-tests; e2e passes on molto 0.52.0
 - Next: release 0.3.0
+
+## 2026-10-05 — spec 002: twelve arguments
+- Done: the argument counter and the per-arity helpers go to 12
+  (`MOLTEST_MOCK_ARGS_MAX`); molto's `source_fetch` takes 8 and its fake had
+  to be written by hand
+- Tests: 21 self-tests (2 new: 7 and 12 arguments, value and void with
+  custom_fake); e2e (C17) passes; fmt and lint clean
+- Next: release 0.4.0
