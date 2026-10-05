@@ -6,3 +6,10 @@
 - Commit: see git log
 - Tests: 17 passed (566 assertions) on Apple clang; fmt and lint clean
 - Next: M2, CI matrix (KI-1 GCC), GitHub repo, release 0.1.0
+
+## 2026-10-04 — M2 CI, e2e and KI-2
+- Done: CI matrix (Linux gcc, macOS clang, Windows MSYS2), e2e on a default
+  C17 `molto new` library, release by tag; KI-2 fixed (mocks did not compile in C17)
+- Commit: 1c76238 (fix), see git log for CI
+- Tests: 17 self-tests pass; e2e passes locally and fails on the pre-fix header
+- Next: CI green on the three platforms (KI-1), tag v0.1.0
