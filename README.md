@@ -25,7 +25,7 @@ DESCRIBE(loads_config) {
 ```toml
 [dev-deps]
 moltest = { git = "https://github.com/moltobuild/moltest", tag = "v0.3.0" }
-moltest_mock = { git = "https://github.com/moltobuild/moltest-mock", tag = "v0.1.0" }
+moltest_mock = { git = "https://github.com/moltobuild/moltest-mock", tag = "v0.2.0" }
 ```
 
 Every mock is reset to zero before each test, before its `BEFORE_EACH`.

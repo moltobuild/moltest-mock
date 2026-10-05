@@ -28,3 +28,9 @@
   any test mode), with `tests/test_injection.c` running its example
 - Tests: 19 self-tests pass; e2e passes, step 3 asserts the duplicate symbol
 - Next: molto RFC-0020 (isolated test binaries for mocking tests)
+
+## 2026-10-05 — v0.2.0 released
+- Done: PR #3 merged; tag v0.2.0, Release workflow green (a first run failed,
+  the rerun passed); KI-3 documented, dependency injection guide
+- Tests: CI green; 19 self-tests, e2e step 3 asserts KI-3
+- Next: molto RFC-0020 (PR moltobuild/molto#94); KI-3 closes in 0.3.0
