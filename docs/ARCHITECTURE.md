@@ -24,10 +24,13 @@ molto test
 ## Key decisions
 - In-process plugin of moltest: [ADR 0001](adr/0001-in-process-plugin.md)
 - fff-style fake function macros: [ADR 0002](adr/0002-fake-function-macros.md)
+- Mocking real code through test isolation in molto: [ADR 0003](adr/0003-test-isolation-by-molto.md) (Proposed)
 
 ## Invariants
 - A mock is a real definition of the function in the test binary; the real
-  function must not be linked into the same binary.
+  function must not be linked into the same binary. Under molto, dependencies
+  and `src/` always are, so only undefined functions can be mocked until molto
+  isolates mocking tests (KI-3, [ADR 0003](adr/0003-test-isolation-by-molto.md)).
 - Every mock starts each test at zero, before BEFORE_EACH.
 - Every mock's constructor references `src/plugin.c`, so one mock brings the
   reporter in, whether the package is linked from source or as an archive.

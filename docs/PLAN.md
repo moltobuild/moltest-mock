@@ -7,7 +7,7 @@ every mock before each test. moltest itself keeps mocking out of its core
 (its ROADMAP non-goals).
 
 ## Current focus
-Milestone: M2 - Ready to publish (done, v0.1.0 released) · Next step: pick the next milestone from the Backlog
+Milestone: M3 - Mock real code · Issue: KI-3 · ADR 0003 (Proposed) · Next step: molto RFC-0020
 
 ## Docs
 [ROADMAP](ROADMAP.md) · [ARCHITECTURE](ARCHITECTURE.md) · [SECURITY](SECURITY.md) ·

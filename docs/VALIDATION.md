@@ -15,7 +15,7 @@ installed by `.github/install-molto.sh`:
 | Job | Runs on | Checks |
 |---|---|---|
 | Test | Linux (gcc), macOS (clang), Windows (MSYS2 gcc) | `molto build`, `molto test` |
-| E2E | the same three | `.github/e2e.sh`: a default C17 `molto new` library with mocks passes; a wrong expectation fails |
+| E2E | the same three | `.github/e2e.sh`: a default C17 `molto new` library with mocks passes; a wrong expectation fails; mocking a real `[deps]` function still does not link (KI-3) |
 | Style | Linux, LLVM 19 | `molto fmt --check`, `molto lint` (a gate) |
 
 `.github/workflows/release.yml` runs on a `v*` tag: the tag must equal the

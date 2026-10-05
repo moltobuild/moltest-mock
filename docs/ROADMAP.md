@@ -21,10 +21,17 @@
 - [x] CI green on all three platforms; KI-1 closed
 - [x] Release 0.1.0 (tag v0.1.0)
 
+## M3 - Mock real code (KI-3, ADR 0003)
+- [x] KI-3 logged; e2e step 3 reproduces it with a real `[deps]` entry
+- [x] README and ARCHITECTURE say what works today
+- [ ] molto RFC-0020 accepted and released
+- [ ] Spec 002: declaring what a test replaces, e2e step 3 passes
+- [ ] ADR 0003 Accepted, KI-3 resolved, release 0.2.0
+
 ## Non-goals
 - gmock-style expectations declared before the call (ADR 0002).
 - Link-time interposition (`--wrap`, weak symbols): not portable (ADR 0002).
-- Mocking variadic functions, or a function defined in the same binary as the mock.
+- Mocking variadic functions, or a call between two functions of one source file.
 - Runtime dependencies beyond moltest and libc.
 
 ## Backlog
@@ -34,3 +41,4 @@
 - C++: compile-tested header, `extern "C"` mocks from C++ tests
 - `MOCK_VALUE_FUNC(int, now, void)` so a no-argument mock is `-Wpedantic` clean before C23
 - More than 6 arguments
+- Thread-safe call recording (atomics or a lock per mock)

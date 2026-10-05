@@ -19,3 +19,10 @@
 - Done: PR #1 merged (62641d4); tag v0.1.0, Release workflow green, GitHub Release published
 - Tests: CI green on Linux, macOS, Windows; no open known issues
 - Next: choose the next milestone from the Backlog
+
+## 2026-10-04 — M3 start: KI-3
+- Done: found that a function a real `[deps]` entry (or `src/`) defines cannot be
+  mocked under molto; KI-3 logged, e2e step 3 reproduces it, README and
+  ARCHITECTURE corrected, ADR 0003 proposed, M3 added to ROADMAP
+- Tests: 17 self-tests pass; e2e passes, step 3 asserts the duplicate symbol
+- Next: molto RFC-0020 (isolated test binaries for mocking tests)

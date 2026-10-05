@@ -46,7 +46,15 @@ Every mock is reset to zero before each test, before its `BEFORE_EACH`.
 - Up to 6 arguments; typedef function pointer and array types first.
 
 The mock *is* the function, so the real one must not be linked into the same
-test binary: mock what your code calls in another library or the system.
+test binary. Under molto today that rules out every function a `[deps]` entry
+or your own `src/` defines: both are compiled into the test binary, and the
+link fails with a duplicate symbol ([KI-3](docs/KNOWN_ISSUES.md)). What works
+now is mocking functions nothing in the binary defines. Mocking real code needs
+molto to link such a test without the sources it replaces (molto RFC-0020,
+[ADR 0003](docs/adr/0003-test-isolation-by-molto.md)).
+
+Mocks are not thread-safe: code under test that calls one from several threads
+gets counts and histories that race.
 
 ## License
 Apache-2.0

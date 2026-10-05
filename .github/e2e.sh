@@ -7,6 +7,7 @@
 #   1. the suite passes: return values, recorded arguments, and a reset
 #      between tests whatever their order                  (spec 001 AC1, AC2, AC6, AC8)
 #   2. a wrong expectation on a mock fails the run         (the mock reaches moltest)
+#   3. a mock of a function a real dependency defines does not link today (KI-3)
 #
 # Also the regression test of KI-2: before the fix this did not compile in C17.
 #
@@ -80,5 +81,57 @@ DESCRIBE(a_wrong_expectation) {
 C
 if molto test > run2.txt 2>&1; then cat run2.txt; fail "a failing mock expectation passed"; fi
 grep -q "e2e_clock_now_mock.call_count" run2.txt || { cat run2.txt; fail "the failure does not name the mock"; }
+
+echo "--- 3. a mock of a real dependency (KI-3)"
+# Steps 1 and 2 mock functions nobody defines. A real [deps] entry is compiled
+# from source into the test binary, so its definition and the mock collide.
+# This asserts that collision, so CI stays green while it holds and turns red
+# the day it stops: then flip it to expect a passing run (molto RFC-0020).
+sed -i.bak '/^DESCRIBE(a_wrong_expectation)/,$d' tests/test_mock.c && rm -f tests/test_mock.c.bak
+mkdir -p ../e2e_clock/src ../e2e_clock/include
+cat > ../e2e_clock/include/e2e_clock.h <<'C'
+int e2e_clock_real(void);
+C
+cat > ../e2e_clock/src/e2e_clock.c <<'C'
+int e2e_clock_real(void) { return 1; }
+C
+cat > ../e2e_clock/recipe.toml <<'T'
+schema = 1
+form = "source"
+kind = "package"
+name = "e2e_clock"
+version = "0.1.0"
+target = "any"
+
+[artifacts]
+type = "source"
+std = "c17"
+sources = ["src/e2e_clock.c"]
+include = ["include"]
+T
+molto add e2e_clock --path ../e2e_clock
+cat >> src/e2e_lib.c <<'C'
+
+#include <e2e_clock.h>
+int e2e_lib_real(void) { return e2e_clock_real() + 1; }
+C
+cat > tests/test_real_dep.c <<'C'
+#include <moltest.h>
+#include <moltest_mock.h>
+
+int e2e_lib_real(void);
+MOCK_VALUE_FUNC(int, e2e_clock_real);
+
+DESCRIBE(a_dependency_function_is_mocked) {
+    e2e_clock_real_mock.return_val = 41;
+    EXPECT_EQ(42, e2e_lib_real());
+}
+C
+if molto test > run3.txt 2>&1; then
+    cat run3.txt
+    fail "KI-3 no longer reproduces: a real dependency can be mocked; update this step and close KI-3"
+fi
+grep -qE "duplicate symbol|multiple definition" run3.txt ||
+    { cat run3.txt; fail "the run failed, but not with the KI-3 duplicate symbol"; }
 
 echo "e2e: ok"
