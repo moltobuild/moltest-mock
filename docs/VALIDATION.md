@@ -9,13 +9,13 @@
 | Lint | `molto lint` |
 
 ## CI
-`.github/workflows/ci.yml`, molto pinned in `MOLTO_VERSION` (0.49.0),
+`.github/workflows/ci.yml`, molto pinned in `MOLTO_VERSION` (0.52.0, the first with RFC-0021),
 installed by `.github/install-molto.sh`:
 
 | Job | Runs on | Checks |
 |---|---|---|
 | Test | Linux (gcc), macOS (clang), Windows (MSYS2 gcc) | `molto build`, `molto test` |
-| E2E | the same three | `.github/e2e.sh`: a default C17 `molto new` library with mocks passes; a wrong expectation fails; mocking a real `[deps]` function still does not link (KI-3) |
+| E2E | the same three | `.github/e2e.sh`: a default C17 `molto new` library with mocks passes; a wrong expectation fails; mocking a real `[deps]` function is a duplicate symbol alone and passes with `[[test.isolated]]` |
 | Style | Linux, LLVM 19 | `molto fmt --check`, `molto lint` (a gate) |
 
 `.github/workflows/release.yml` runs on a `v*` tag: the tag must equal the

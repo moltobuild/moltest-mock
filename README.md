@@ -45,13 +45,28 @@ Every mock is reset to zero before each test, before its `BEFORE_EACH`.
   file to share a mock between test files (and the `VOID` pair).
 - Up to 6 arguments; typedef function pointer and array types first.
 
+## Mocking real code
+
 The mock *is* the function, so the real one must not be linked into the same
-test binary. Under molto today that rules out every function a `[deps]` entry
-or your own `src/` defines: both are compiled into the test binary, and the
-link fails with a duplicate symbol ([KI-3](docs/KNOWN_ISSUES.md)). What works
-now is mocking functions nothing in the binary defines. Mocking real code needs
-molto to link such a test without the sources it replaces (molto RFC-0021,
-[ADR 0003](docs/adr/0003-test-isolation-by-molto.md)).
+test binary. Under molto, `src/` and every `[deps]` entry are compiled into it,
+so a test that mocks one of their functions says which source it replaces
+(molto 0.52.0 or later, RFC-0021):
+
+```toml
+[[test.isolated]]
+file     = "tests/test_config.c"
+replaces = ["src/fs.c"]            # or "dep:src/x.c" for a dependency's source, or "dep"
+```
+
+That test links into an executable of its own without `src/fs.c`, and its
+mocks stand in for what `src/fs.c` defined; the rest of the suite keeps the real
+one. Without the declaration the link fails with a duplicate symbol.
+
+The linker takes a file whole, from your sources and your dependencies alike.
+So the test defines a mock for every function of a replaced source that the
+files it links call, used or not. It also needs any mock it relied on from
+another test file: it does not link those. A missing one is an undefined
+symbol at the link ([ADR 0003](docs/adr/0003-test-isolation-by-molto.md)).
 
 ### Calls inside one source file
 

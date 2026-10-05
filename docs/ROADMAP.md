@@ -26,9 +26,10 @@
 - [x] README and ARCHITECTURE say what works today
 - [x] README guide: mocking through dependency injection, run by `tests/test_injection.c`
 - [x] Release 0.2.0 (tag v0.2.0): KI-3 documented, injection guide
-- [ ] molto RFC-0021 accepted and released
-- [ ] Spec 002: declaring what a test replaces, e2e step 3 passes
-- [ ] ADR 0003 Accepted, KI-3 resolved, release 0.3.0
+- [x] molto RFC-0021 accepted and released (molto 0.52.0)
+- [x] e2e step 3 passes with `[[test.isolated]]`; CI on molto 0.52.0
+- [x] ADR 0003 Accepted, KI-3 resolved, README "Mocking real code"
+- [ ] Release 0.3.0
 
 ## Non-goals
 - gmock-style expectations declared before the call (ADR 0002).

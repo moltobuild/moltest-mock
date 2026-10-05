@@ -1,4 +1,4 @@
-# 0003 Mocks replace real code through test isolation in molto — Status: Proposed
+# 0003 Mocks replace real code through test isolation in molto — Status: Accepted
 Date: 2026-10-04
 
 ## Context
@@ -29,4 +29,7 @@ ships it.
 - The unit a test replaces is a source file: mocking one function of a `.c`
   means providing every function of it that the binary needs.
 - A call between two functions of the same `.c` still cannot be mocked.
-- Depends on molto shipping RFC-0021; until then KI-3 stays open.
+- Needs molto 0.52.0, the first release with RFC-0021.
+- The linker takes a file whole: an isolated test defines a mock for every
+  function its linked files call, including ones another test file mocked for
+  the shared suite.

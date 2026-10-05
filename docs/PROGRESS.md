@@ -36,3 +36,12 @@
 - Also: molto renumbered isolated tests to RFC-0021 (PR moltobuild/molto#94);
   references updated. RFC-0020 is now the test run position (#95)
 - Next: molto RFC-0021; KI-3 closes in 0.3.0
+
+## 2026-10-05 — KI-3 resolved: mocking real code
+- Done: molto 0.52.0 ships RFC-0021; e2e step 3 shows the duplicate symbol
+  without the declaration and a passing run with `[[test.isolated]]`; CI on
+  molto 0.52.0; README "Mocking real code"; ADR 0003 Accepted; KI-3 resolved
+- Found: an isolated test also needs the mocks another test file defined for the
+  shared suite, since the linker takes src/e2e_lib.c whole; documented
+- Tests: 19 self-tests; e2e passes on molto 0.52.0
+- Next: release 0.3.0
