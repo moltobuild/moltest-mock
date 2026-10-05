@@ -86,7 +86,7 @@ echo "--- 3. a mock of a real dependency (KI-3)"
 # Steps 1 and 2 mock functions nobody defines. A real [deps] entry is compiled
 # from source into the test binary, so its definition and the mock collide.
 # This asserts that collision, so CI stays green while it holds and turns red
-# the day it stops: then flip it to expect a passing run (molto RFC-0020).
+# the day it stops: then flip it to expect a passing run (molto RFC-0021).
 sed -i.bak '/^DESCRIBE(a_wrong_expectation)/,$d' tests/test_mock.c && rm -f tests/test_mock.c.bak
 mkdir -p ../e2e_clock/src ../e2e_clock/include
 cat > ../e2e_clock/include/e2e_clock.h <<'C'
