@@ -149,6 +149,6 @@ replaces = ["e2e_clock:src/e2e_clock.c"]
 TOML
 molto test > run3b.txt 2>&1 || { cat run3b.txt; fail "a test that replaces the dependency's source failed (KI-3)"; }
 cat run3b.txt
-grep -q "test_real_dep ... ok" run3b.txt || fail "the isolated test did not run on its own"
+grep -qE "test_real_dep(\.exe)? \.\.\. ok" run3b.txt || fail "the isolated test did not run on its own"
 
 echo "e2e: ok"
