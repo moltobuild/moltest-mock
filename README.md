@@ -53,6 +53,22 @@ now is mocking functions nothing in the binary defines. Mocking real code needs
 molto to link such a test without the sources it replaces (molto RFC-0020,
 [ADR 0003](docs/adr/0003-test-isolation-by-molto.md)).
 
+### Calls inside one source file
+
+What a mock replaces is a call that crosses from one source file to another.
+A call between two functions of the same `.c` cannot be mocked, with this
+package or with fff: the linker keeps or drops a whole object, and the compiler
+may resolve, or inline, a call within one file without the linker at all.
+
+```c
+/* src/config.c: load_config's call to read_file cannot be mocked */
+int read_file(const char *path) { ... }
+int load_config(const char *path) { return read_file(path) != 0 ? -1 : 0; }
+```
+
+Move `read_file` to `src/fs.c` and the call crosses a boundary: a test that
+replaces `src/fs.c` (molto RFC-0020) can mock it and still test `load_config`.
+
 Mocks are not thread-safe: code under test that calls one from several threads
 gets counts and histories that race.
 
