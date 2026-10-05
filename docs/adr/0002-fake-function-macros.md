@@ -26,6 +26,8 @@ between a header and one file. Arity is counted with C23 `__VA_OPT__`, 0 to 6.
 ## Consequences
 - The real function must not be in the same test binary (link error otherwise):
   mocks fit calls across a boundary, not calls inside one object file.
-- Needs a C23 preprocessor (`__VA_OPT__`, a variadic macro with no variadic
-  arguments); molto builds with `-std=c2x`. GCC to be verified (KI-1).
+- Uses `__VA_OPT__`, C23 but accepted by GCC and Clang in C11 and C17 too;
+  the definitions end in `_Static_assert`, not C23's `static_assert`, so a
+  default `molto new` project (C17) compiles them (KI-2). Under `-Wpedantic`
+  before C23, a mock with no arguments warns. GCC and Clang verified in CI.
 - Types with commas or declarators around the name need a typedef.

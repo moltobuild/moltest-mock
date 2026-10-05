@@ -41,6 +41,10 @@
  * pointer, an array) needs a typedef first. Up to MOLTEST_MOCK_ARGS_MAX
  * arguments; variadic functions cannot be mocked.
  *
+ * C11 or later. Under -Wpedantic before C23, a mock with no arguments,
+ * MOCK_VALUE_FUNC(int, now), warns: C17 wants at least one argument for a
+ * macro's `...`.
+ *
  * A mock used by several test files is declared in a shared header with
  * MOCK_DECLARE_VALUE_FUNC / MOCK_DECLARE_VOID_FUNC and defined in one of them
  * with MOCK_DEFINE_VALUE_FUNC / MOCK_DEFINE_VOID_FUNC; MOCK_VALUE_FUNC and
@@ -178,8 +182,16 @@ void moltest_mock_reset_all(void);
         name##_mock.history_dropped++;                                                             \
     name##_mock.call_count++;
 
-/* The reset function, and a constructor that registers it with the plugin.
-   Ends in a declaration so that the macro takes the caller's semicolon. */
+/* A declaration to end a definition macro on, so that it takes the caller's
+   semicolon. _Static_assert is C11 and needs no header; C23 and C++ spell it
+   static_assert, which C17 only has through <assert.h>. */
+#ifdef __cplusplus
+#define MOLTEST_MOCK_END_(name) static_assert(1, #name)
+#else
+#define MOLTEST_MOCK_END_(name) _Static_assert(1, #name)
+#endif
+
+/* The reset function, and a constructor that registers it with the plugin. */
 #define MOLTEST_MOCK_RESET_(name)                                                                  \
     void name##_mock_reset(void) { memset(&name##_mock, 0, sizeof name##_mock); }                  \
     __attribute__((constructor)) static void moltest_mock_register_##name(void) {                  \
@@ -214,7 +226,7 @@ void moltest_mock_reset_all(void);
         }                                                                                          \
         return name##_mock.return_val;                                                             \
     }                                                                                              \
-    static_assert(1, #name)
+    MOLTEST_MOCK_END_(name)
 
 #define MOLTEST_MOCK_DECLARE_VOID_(n, name, ...)                                                   \
     typedef struct {                                                                               \
@@ -235,6 +247,6 @@ void moltest_mock_reset_all(void);
         if(name##_mock.custom_fake != NULL)                                                        \
             name##_mock.custom_fake(MOLTEST_MOCK_ARGS_##n());                                      \
     }                                                                                              \
-    static_assert(1, #name)
+    MOLTEST_MOCK_END_(name)
 
 #endif /* MOLTEST_MOCK_H */

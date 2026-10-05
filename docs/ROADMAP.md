@@ -14,10 +14,12 @@
 - [x] Self-tests, `molto fmt --check` and `molto lint` clean
 
 ## M2 - Ready to publish
-- [ ] GitHub repo `moltobuild/moltest-mock`
-- [ ] CI on Linux (gcc), macOS (clang), Windows (MSYS2 gcc), as moltest-coverage's (KI-1)
-- [ ] E2E: a `molto new` library that mocks a function of a dependency
-- [ ] README, release 0.1.0 by tag
+- [x] GitHub repo `moltobuild/moltest-mock`
+- [x] CI on Linux (gcc), macOS (clang), Windows (MSYS2 gcc), as moltest-coverage's (KI-1), molto 0.49.0
+- [x] E2E: a default (C17) `molto new` library that mocks two functions of another library
+- [x] Release by tag (release.yml, `.github/check-version.sh`)
+- [x] CI green on all three platforms; KI-1 closed
+- [ ] Release 0.1.0 (tag v0.1.0)
 
 ## Non-goals
 - gmock-style expectations declared before the call (ADR 0002).
@@ -30,4 +32,5 @@
 - Assertion helpers (`EXPECT_CALLED`, `EXPECT_CALLED_WITH`) on top of moltest's EXPECT_*
 - Automatic verification at test end: needs a pre-verdict hook in moltest (moltest ADR, then here)
 - C++: compile-tested header, `extern "C"` mocks from C++ tests
+- `MOCK_VALUE_FUNC(int, now, void)` so a no-argument mock is `-Wpedantic` clean before C23
 - More than 6 arguments

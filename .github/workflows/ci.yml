@@ -1,0 +1,154 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+  # release.yml runs this same CI before it publishes anything.
+  workflow_call:
+
+# A push that supersedes another cancels it. "-ci" in the group: called from
+# release.yml, github.workflow is "Release", and a shared group would let one
+# cancel the other.
+concurrency:
+  group: ${{ github.workflow }}-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# The molto that builds and consumes this plugin, pinned like a dependency.
+# C_COMPILER skips pickup, so a red is this repository's.
+env:
+  MOLTO_VERSION: "0.49.0"
+  MOLTO_RELEASES: https://github.com/moltobuild/molto/releases/download
+  LLVM_VERSION: "19"
+
+jobs:
+  # The self-tests, and the plugin's reset on its own suite. On Linux this is
+  # also the first GCC build (KI-1).
+  test:
+    name: Test (${{ matrix.os }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: linux
+            runner: ubuntu-24.04
+            asset: x86_64-linux
+            cc: gcc
+            sha: sha256sum
+          - os: macos
+            runner: macos-14
+            asset: arm64-macos
+            cc: clang
+            sha: shasum -a 256
+    env:
+      C_COMPILER: ${{ matrix.cc }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Install molto ${{ env.MOLTO_VERSION }}
+        run: ./.github/install-molto.sh "${{ matrix.asset }}" "${{ matrix.sha }}"
+      - run: molto build
+      - run: molto test
+
+  # Windows apart because its shell is: MSYS2 for the gcc it brings.
+  test-windows:
+    name: Test (windows)
+    runs-on: windows-2022
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: msys2 {0}
+    env:
+      C_COMPILER: gcc
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: msys2/setup-msys2@v2.32.0
+        with:
+          msystem: MINGW64
+          update: true
+          # git: molto resolves the moltest git dependency with `git ls-remote`,
+          # and an MSYS2 shell does not see the runner's own git.
+          install: >-
+            git
+            mingw-w64-x86_64-gcc
+      - name: Install molto ${{ env.MOLTO_VERSION }}
+        run: ./.github/install-molto.sh x86_64-windows.exe sha256sum
+      - run: molto build
+      - run: molto test
+
+  # The plugin as a user meets it: a default (C17) `molto new` library that
+  # mocks two functions of another library (.github/e2e.sh).
+  e2e:
+    name: E2E (${{ matrix.os }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: linux
+            runner: ubuntu-24.04
+            asset: x86_64-linux
+            cc: gcc
+            sha: sha256sum
+          - os: macos
+            runner: macos-14
+            asset: arm64-macos
+            cc: clang
+            sha: shasum -a 256
+    env:
+      C_COMPILER: ${{ matrix.cc }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Install molto ${{ env.MOLTO_VERSION }}
+        run: ./.github/install-molto.sh "${{ matrix.asset }}" "${{ matrix.sha }}"
+      - run: ./.github/e2e.sh "$GITHUB_WORKSPACE"
+
+  e2e-windows:
+    name: E2E (windows)
+    runs-on: windows-2022
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: msys2 {0}
+    env:
+      C_COMPILER: gcc
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: msys2/setup-msys2@v2.32.0
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            git
+            mingw-w64-x86_64-gcc
+      - name: Install molto ${{ env.MOLTO_VERSION }}
+        run: ./.github/install-molto.sh x86_64-windows.exe sha256sum
+      - run: ./.github/e2e.sh "$PWD"
+
+  # Formatting and static analysis with the LLVM molto's own CI pins. A gate
+  # from the first commit: this code was formatted and lint-clean from the start.
+  style:
+    name: Style
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      C_COMPILER: gcc
+      MOLTO_CLANG_FORMAT: /usr/bin/clang-format-19
+      MOLTO_CLANG_TIDY: /usr/bin/clang-tidy-19
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Install LLVM ${{ env.LLVM_VERSION }}
+        run: |
+          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key \
+            | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc >/dev/null
+          sudo add-apt-repository -y \
+            "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-${LLVM_VERSION} main"
+          sudo apt-get install -y -o Acquire::Retries=3 \
+            clang-format-${LLVM_VERSION} clang-tidy-${LLVM_VERSION}
+      - name: Install molto ${{ env.MOLTO_VERSION }}
+        run: ./.github/install-molto.sh x86_64-linux sha256sum
+      - run: molto fmt --check
+      - run: molto lint

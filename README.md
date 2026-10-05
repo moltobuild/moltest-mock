@@ -1,8 +1,10 @@
 # moltest-mock
 
+[![CI](https://github.com/moltobuild/moltest-mock/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/moltobuild/moltest-mock/actions/workflows/ci.yml)
+
 Fake functions for C suites run by [moltest](https://github.com/moltobuild/moltest),
 in the style of [fff](https://github.com/meekrosoft/fff). Requires moltest 0.3.0
-or later and a C23 compiler (`-std=c2x`).
+or later and C11 or later (molto's default, C17, works).
 
 ```c
 #include <moltest.h>

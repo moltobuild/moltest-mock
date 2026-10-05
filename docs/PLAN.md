@@ -7,7 +7,7 @@ every mock before each test. moltest itself keeps mocking out of its core
 (its ROADMAP non-goals).
 
 ## Current focus
-Milestone: M1 - MVP · Spec: specs/001-mvp-fakes.md (done) · Next step: M2, CI on Linux, macOS and Windows (GCC is untested: KI-1), then publish the GitHub repo
+Milestone: M2 - Ready to publish · Spec: specs/001-mvp-fakes.md (done) · Next step: merge PR #1, then tag v0.1.0
 
 ## Docs
 [ROADMAP](ROADMAP.md) · [ARCHITECTURE](ARCHITECTURE.md) · [SECURITY](SECURITY.md) ·

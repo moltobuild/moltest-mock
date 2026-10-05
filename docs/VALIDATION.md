@@ -9,8 +9,18 @@
 | Lint | `molto lint` |
 
 ## CI
-Not yet (M2): the plan is moltest-coverage's matrix, Linux gcc, macOS clang,
-Windows MSYS2 gcc, plus a Style gate.
+`.github/workflows/ci.yml`, molto pinned in `MOLTO_VERSION` (0.49.0),
+installed by `.github/install-molto.sh`:
+
+| Job | Runs on | Checks |
+|---|---|---|
+| Test | Linux (gcc), macOS (clang), Windows (MSYS2 gcc) | `molto build`, `molto test` |
+| E2E | the same three | `.github/e2e.sh`: a default C17 `molto new` library with mocks passes; a wrong expectation fails |
+| Style | Linux, LLVM 19 | `molto fmt --check`, `molto lint` (a gate) |
+
+`.github/workflows/release.yml` runs on a `v*` tag: the tag must equal the
+version in Project.toml and recipe.toml, the CI above runs again, and only then
+is the GitHub Release published.
 
 ## Strategy
 - The macros are tested by using them: each spec criterion is a `DESCRIBE`
