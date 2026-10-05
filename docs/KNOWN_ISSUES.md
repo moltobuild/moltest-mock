@@ -5,3 +5,10 @@
 - Risk: `__VA_OPT__` and a variadic macro called with no variadic arguments
   (`MOCK_VALUE_FUNC(int, now)`) are C23; older GCC in `-std=c2x` may warn.
 - Expected: no warnings on GCC 12+. To be closed by the M2 CI matrix.
+
+## KI-2 Mocks did not compile in C17 — Status: Resolved
+- Repro: `molto new` (C17 by default), add moltest-mock, define any mock.
+- Expected: compiles. Actual: `static_assert` undeclared; it is a keyword only
+  from C23, before that a macro of `<assert.h>`.
+- Fix: the definitions end in `_Static_assert` in C (`static_assert` in C++).
+- Test: `.github/e2e.sh` builds a default C17 `molto new` library with mocks.
