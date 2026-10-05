@@ -24,5 +24,7 @@
 - Done: found that a function a real `[deps]` entry (or `src/`) defines cannot be
   mocked under molto; KI-3 logged, e2e step 3 reproduces it, README and
   ARCHITECTURE corrected, ADR 0003 proposed, M3 added to ROADMAP
-- Tests: 17 self-tests pass; e2e passes, step 3 asserts the duplicate symbol
+- Also: README guide to mocking through dependency injection (works today,
+  any test mode), with `tests/test_injection.c` running its example
+- Tests: 19 self-tests pass; e2e passes, step 3 asserts the duplicate symbol
 - Next: molto RFC-0020 (isolated test binaries for mocking tests)

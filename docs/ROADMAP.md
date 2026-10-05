@@ -24,6 +24,7 @@
 ## M3 - Mock real code (KI-3, ADR 0003)
 - [x] KI-3 logged; e2e step 3 reproduces it with a real `[deps]` entry
 - [x] README and ARCHITECTURE say what works today
+- [x] README guide: mocking through dependency injection, run by `tests/test_injection.c`
 - [ ] molto RFC-0020 accepted and released
 - [ ] Spec 002: declaring what a test replaces, e2e step 3 passes
 - [ ] ADR 0003 Accepted, KI-3 resolved, release 0.2.0
