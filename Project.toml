@@ -1,0 +1,32 @@
+# moltest-mock's own manifest: built and tested with molto.
+# Consumers add it with `molto add git+https://github.com/moltobuild/moltest-mock --dev`.
+[package]
+name = "moltest_mock"
+version = "0.1.0"
+description = "Fake functions for C suites run by moltest"
+repository = "https://github.com/moltobuild/moltest-mock"
+license = "Apache-2.0"
+artifact = "static"
+
+[target]
+std = "c2x"
+requires = ["attr_nodiscard"]
+defines = ["_DEFAULT_SOURCE", "__USE_MINGW_ANSI_STDIO=1"]
+include = ["include"]
+flags = ["-Wall", "-Wextra", "-Wpedantic"]
+
+[test]
+mode = "single"
+
+# For the tests only. src/ declares the moltest API it uses (src/moltest_api.h)
+# and links against the consumer's moltest, so there is one moltest per build.
+[dev-deps]
+moltest = { git = "https://github.com/moltobuild/moltest", tag = "v0.3.0" }
+
+[profile.debug]
+opt_level = 0
+debug_info = true
+
+[profile.release]
+opt_level = 3
+debug_info = false

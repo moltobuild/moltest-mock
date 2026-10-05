@@ -1,0 +1,21 @@
+# How a consumer compiles moltest-mock (molto RFC-0009).
+schema = 1
+form = "source"
+kind = "package"
+name = "moltest_mock"
+version = "0.1.0"
+target = "any"
+
+[artifacts]
+type = "source"
+std = "c2x"
+sources = ["src/plugin.c", "src/registry.c"]
+include = ["include"]
+
+[artifacts.private]
+defines = ["_DEFAULT_SOURCE", "__USE_MINGW_ANSI_STDIO=1"]
+
+[about]
+description = "Fake functions for C suites run by moltest"
+license = "Apache-2.0"
+homepage = "https://github.com/moltobuild/moltest-mock"
