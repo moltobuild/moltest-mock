@@ -26,7 +26,7 @@
 - [x] README and ARCHITECTURE say what works today
 - [x] README guide: mocking through dependency injection, run by `tests/test_injection.c`
 - [x] Release 0.2.0 (tag v0.2.0): KI-3 documented, injection guide
-- [ ] molto RFC-0020 accepted and released
+- [ ] molto RFC-0021 accepted and released
 - [ ] Spec 002: declaring what a test replaces, e2e step 3 passes
 - [ ] ADR 0003 Accepted, KI-3 resolved, release 0.3.0
 

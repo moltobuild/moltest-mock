@@ -33,4 +33,6 @@
 - Done: PR #3 merged; tag v0.2.0, Release workflow green (a first run failed,
   the rerun passed); KI-3 documented, dependency injection guide
 - Tests: CI green; 19 self-tests, e2e step 3 asserts KI-3
-- Next: molto RFC-0020 (PR moltobuild/molto#94); KI-3 closes in 0.3.0
+- Also: molto renumbered isolated tests to RFC-0021 (PR moltobuild/molto#94);
+  references updated. RFC-0020 is now the test run position (#95)
+- Next: molto RFC-0021; KI-3 closes in 0.3.0

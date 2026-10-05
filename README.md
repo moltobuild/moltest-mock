@@ -50,7 +50,7 @@ test binary. Under molto today that rules out every function a `[deps]` entry
 or your own `src/` defines: both are compiled into the test binary, and the
 link fails with a duplicate symbol ([KI-3](docs/KNOWN_ISSUES.md)). What works
 now is mocking functions nothing in the binary defines. Mocking real code needs
-molto to link such a test without the sources it replaces (molto RFC-0020,
+molto to link such a test without the sources it replaces (molto RFC-0021,
 [ADR 0003](docs/adr/0003-test-isolation-by-molto.md)).
 
 ### Calls inside one source file
@@ -67,7 +67,7 @@ int load_config(const char *path) { return read_file(path) != 0 ? -1 : 0; }
 ```
 
 Move `read_file` to `src/fs.c` and the call crosses a boundary: a test that
-replaces `src/fs.c` (molto RFC-0020) can mock it and still test `load_config`.
+replaces `src/fs.c` (molto RFC-0021) can mock it and still test `load_config`.
 
 Mocks are not thread-safe: code under test that calls one from several threads
 gets counts and histories that race.
@@ -148,7 +148,7 @@ by every test of the file.
 
 When to use which: injection when you design the code, or can change it;
 link-time replacement for code you cannot change, such as a dependency calling
-into another (molto RFC-0020). `tests/test_injection.c` runs this example.
+into another (molto RFC-0021). `tests/test_injection.c` runs this example.
 
 ## License
 Apache-2.0

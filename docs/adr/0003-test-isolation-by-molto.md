@@ -11,7 +11,7 @@ package can change that.
 
 ## Decision
 Keep the fff-style macros of ADR 0002. Mocking real code is made possible by
-molto (RFC-0020): a test file that declares what it replaces is linked into a
+molto (RFC-0021): a test file that declares what it replaces is linked into a
 binary of its own, without those sources, while the rest of the suite keeps its
 mode. This package documents the declaration, tests it end to end (e2e step 3
 flips from "does not link" to "passes") and requires the molto version that
@@ -29,4 +29,4 @@ ships it.
 - The unit a test replaces is a source file: mocking one function of a `.c`
   means providing every function of it that the binary needs.
 - A call between two functions of the same `.c` still cannot be mocked.
-- Depends on molto shipping RFC-0020; until then KI-3 stays open.
+- Depends on molto shipping RFC-0021; until then KI-3 stays open.

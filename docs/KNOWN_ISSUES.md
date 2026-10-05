@@ -27,4 +27,4 @@
   moltest included (and, on Linux, libc's own internal calls).
 - Test: `.github/e2e.sh` step 3 asserts the duplicate symbol; flip it when fixed.
 - Fix: needs molto to link a test that mocks without the sources it replaces
-  (molto RFC-0020, ADR 0003). Not fixable in this package alone.
+  (molto RFC-0021, ADR 0003). Not fixable in this package alone.
