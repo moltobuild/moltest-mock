@@ -19,7 +19,7 @@
 - [x] E2E: a default (C17) `molto new` library that mocks two functions of another library
 - [x] Release by tag (release.yml, `.github/check-version.sh`)
 - [x] CI green on all three platforms; KI-1 closed
-- [ ] Release 0.1.0 (tag v0.1.0)
+- [x] Release 0.1.0 (tag v0.1.0)
 
 ## Non-goals
 - gmock-style expectations declared before the call (ADR 0002).
