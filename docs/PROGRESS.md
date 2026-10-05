@@ -14,3 +14,8 @@
 - Tests: 17 self-tests pass; e2e passes locally and fails on the pre-fix header
 - CI: all green on Linux, macOS, Windows; GCC without warnings (KI-1 closed)
 - Next: merge PR #1, tag v0.1.0
+
+## 2026-10-05 — M2 done, v0.1.0 released
+- Done: PR #1 merged (62641d4); tag v0.1.0, Release workflow green, GitHub Release published
+- Tests: CI green on Linux, macOS, Windows; no open known issues
+- Next: choose the next milestone from the Backlog

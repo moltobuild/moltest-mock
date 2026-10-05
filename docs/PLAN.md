@@ -7,7 +7,7 @@ every mock before each test. moltest itself keeps mocking out of its core
 (its ROADMAP non-goals).
 
 ## Current focus
-Milestone: M2 - Ready to publish · Spec: specs/001-mvp-fakes.md (done) · Next step: merge PR #1, then tag v0.1.0
+Milestone: M2 - Ready to publish (done, v0.1.0 released) · Next step: pick the next milestone from the Backlog
 
 ## Docs
 [ROADMAP](ROADMAP.md) · [ARCHITECTURE](ARCHITECTURE.md) · [SECURITY](SECURITY.md) ·
