@@ -37,3 +37,10 @@ molto test
 - The struct layout depends on `MOLTEST_MOCK_HISTORY`: it is set for the whole
   binary, never per file.
 - No dependency beyond moltest (consumer's own copy) and libc.
+
+## Manifest package interface
+
+Project.toml is the only carried description (Molto RFC-0024). The plugin
+exports include/ by convention and declares moltest in [deps], since its
+sources call that API. The graph shares one runner with consumers. Development
+configuration is ignored when the plugin is consumed.

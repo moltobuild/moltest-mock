@@ -10,14 +10,14 @@ molto lint
 ## Trying it on a project
 ```toml
 [dev-deps]
-moltest = { git = "https://github.com/moltobuild/moltest", tag = "v0.3.0" }
+moltest = { git = "https://github.com/moltobuild/moltest", rev = "9e0611007d3b1ccebd589273dd14a7a229265c3c" }
 moltest_mock = { path = "../moltest-mock" }
 ```
 Then, in a test file, `#include <moltest_mock.h>` and `MOCK_VALUE_FUNC(...)`
 for a function the code under test calls but `src/` does not define.
 
 ## Releasing
-1. One PR bumps `version` in `Project.toml` and `recipe.toml`;
+1. One PR bumps `version` in `Project.toml`;
    `.github/check-version.sh <version>` checks both.
 2. After it merges, tag the merge commit and push the tag:
    `git tag -a v0.1.0 -m "moltest-mock 0.1.0" && git push origin v0.1.0`.
