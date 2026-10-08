@@ -7,7 +7,7 @@ every mock before each test. moltest itself keeps mocking out of its core
 (its ROADMAP non-goals).
 
 ## Current focus
-Milestone: M4 - Twelve arguments · Spec: specs/002-twelve-arguments.md (done) · Next step: release 0.4.0
+Milestone: Moltest 0.4.0 compatibility · Spec: [004](specs/004-moltest-0.4.0.md) · Next step: merge compatibility PR and publish a new plugin release
 
 ## Docs
 [ROADMAP](ROADMAP.md) · [ARCHITECTURE](ARCHITECTURE.md) · [SECURITY](SECURITY.md) ·

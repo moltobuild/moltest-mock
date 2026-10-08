@@ -15,12 +15,12 @@ Same as moltest (decided 2026-10-04):
 ## Development
 | Name | Version | Why |
 |---|---|---|
-| moltest | v0.3.0 (tag) | runs the self-tests; reporter API v1 |
+| moltest | v0.4.0 (tag) | runs the self-tests; reporter API v1 |
 
 ## External tools
 | Tool | Why |
 |---|---|
 | molto | build, test, fmt, lint |
 
-The RFC-0024 migration pins moltest to `9e0611007d3b1ccebd589273dd14a7a229265c3c` in [deps] until
-a compatible release tag is published. Consumers must select the same revision.
+The manifest pins moltest to the released `v0.4.0` tag in `[deps]`.
+Consumers must select the same tag to share one runner with this plugin.

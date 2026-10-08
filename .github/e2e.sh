@@ -21,8 +21,8 @@ fail() { echo "e2e: $*" >&2; exit 1; }
 cd "$(mktemp -d)"
 molto new e2e_lib
 cd e2e_lib
-# Use the same migrated runner as the plugin dependency.
-molto add "git+https://github.com/moltobuild/moltest#${MOLTEST_REF:-9e0611007d3b1ccebd589273dd14a7a229265c3c}" --dev
+# Use the same released runner as the plugin dependency.
+molto add "git+https://github.com/moltobuild/moltest#${MOLTEST_REF:-v0.4.0}" --dev
 molto add moltest_mock --dev --path "$checkout"
 grep -q 'std = "c17"' Project.toml || fail "molto new no longer defaults to C17; update this script"
 
