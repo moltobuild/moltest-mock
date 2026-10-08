@@ -10,7 +10,7 @@ molto lint
 ## Trying it on a project
 ```toml
 [dev-deps]
-moltest = { git = "https://github.com/moltobuild/moltest", rev = "9e0611007d3b1ccebd589273dd14a7a229265c3c" }
+moltest = { git = "https://github.com/moltobuild/moltest", tag = "v0.4.0" }
 moltest_mock = { path = "../moltest-mock" }
 ```
 Then, in a test file, `#include <moltest_mock.h>` and `MOCK_VALUE_FUNC(...)`

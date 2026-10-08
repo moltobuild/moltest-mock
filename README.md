@@ -3,8 +3,8 @@
 [![CI](https://github.com/moltobuild/moltest-mock/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/moltobuild/moltest-mock/actions/workflows/ci.yml)
 
 Fake functions for C suites run by [moltest](https://github.com/moltobuild/moltest),
-in the style of [fff](https://github.com/meekrosoft/fff). Requires moltest 0.3.0
-or later and C11 or later (molto's default, C17, works).
+in the style of [fff](https://github.com/meekrosoft/fff). This checkout uses
+moltest v0.4.0 and requires C11 or later (molto's default, C17, works).
 
 ```c
 #include <moltest.h>
@@ -24,9 +24,12 @@ DESCRIBE(loads_config) {
 
 ```toml
 [dev-deps]
-moltest = { git = "https://github.com/moltobuild/moltest", tag = "v0.3.0" }
-moltest_mock = { git = "https://github.com/moltobuild/moltest-mock", tag = "v0.2.0" }
+moltest = { git = "https://github.com/moltobuild/moltest", tag = "v0.4.0" }
+moltest_mock = { path = "../moltest-mock" }
 ```
+
+The path refers to a checkout containing this migration. After a compatible
+release is published, replace it with that exact release tag.
 
 Every mock is reset to zero before each test, before its `BEFORE_EACH`.
 
@@ -175,6 +178,7 @@ the only consumer description; run `molto package` before tagging a release.
 Older release tags still use recipes and require older Molto consumers.
 CI temporarily builds the immutable Molto revision in `MOLTO_SOURCE_REF`.
 
-The manifest pins the migrated moltest at `9e0611007d3b1ccebd589273dd14a7a229265c3c` as a runtime
-dependency. If your project also names moltest, use the same revision until
-compatible release tags are published.
+The manifest pins moltest `v0.4.0` as a runtime dependency. If your project
+also names moltest, use the same `v0.4.0` tag so the dependency graph shares one
+runner. Published plugin tags predating this migration still require their
+older runner; use a release containing this change with moltest `v0.4.0`.
