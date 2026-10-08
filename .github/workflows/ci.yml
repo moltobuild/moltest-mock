@@ -20,6 +20,8 @@ concurrency:
 # C_COMPILER skips pickup, so a red is this repository's.
 env:
   MOLTO_VERSION: "0.52.0"
+  MOLTEST_REF: "9e0611007d3b1ccebd589273dd14a7a229265c3c"
+  MOLTO_SOURCE_REF: "9da5c0c4b53a0135c0964403c9846317a2236ebc"
   MOLTO_RELEASES: https://github.com/moltobuild/molto/releases/download
   LLVM_VERSION: "19"
 
@@ -48,9 +50,10 @@ jobs:
       C_COMPILER: ${{ matrix.cc }}
     steps:
       - uses: actions/checkout@v7.0.1
-      - name: Install molto ${{ env.MOLTO_VERSION }}
+      - name: Install the pinned Molto revision
         run: ./.github/install-molto.sh "${{ matrix.asset }}" "${{ matrix.sha }}"
       - run: molto build
+      - run: molto package
       - run: molto test
 
   # Windows apart because its shell is: MSYS2 for the gcc it brings.
@@ -73,10 +76,12 @@ jobs:
           # and an MSYS2 shell does not see the runner's own git.
           install: >-
             git
+            make
             mingw-w64-x86_64-gcc
-      - name: Install molto ${{ env.MOLTO_VERSION }}
+      - name: Install the pinned Molto revision
         run: ./.github/install-molto.sh x86_64-windows.exe sha256sum
       - run: molto build
+      - run: molto package
       - run: molto test
 
   # The plugin as a user meets it: a default (C17) `molto new` library that
@@ -103,7 +108,7 @@ jobs:
       C_COMPILER: ${{ matrix.cc }}
     steps:
       - uses: actions/checkout@v7.0.1
-      - name: Install molto ${{ env.MOLTO_VERSION }}
+      - name: Install the pinned Molto revision
         run: ./.github/install-molto.sh "${{ matrix.asset }}" "${{ matrix.sha }}"
       - run: ./.github/e2e.sh "$GITHUB_WORKSPACE"
 
@@ -124,8 +129,9 @@ jobs:
           update: true
           install: >-
             git
+            make
             mingw-w64-x86_64-gcc
-      - name: Install molto ${{ env.MOLTO_VERSION }}
+      - name: Install the pinned Molto revision
         run: ./.github/install-molto.sh x86_64-windows.exe sha256sum
       - run: ./.github/e2e.sh "$PWD"
 
@@ -149,7 +155,7 @@ jobs:
             "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-${LLVM_VERSION} main"
           sudo apt-get install -y -o Acquire::Retries=3 \
             clang-format-${LLVM_VERSION} clang-tidy-${LLVM_VERSION}
-      - name: Install molto ${{ env.MOLTO_VERSION }}
+      - name: Install the pinned Molto revision
         run: ./.github/install-molto.sh x86_64-linux sha256sum
       - run: molto fmt --check
       - run: molto lint

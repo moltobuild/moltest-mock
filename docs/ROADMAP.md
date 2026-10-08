@@ -48,3 +48,6 @@
 - C++: compile-tested header, `extern "C"` mocks from C++ tests
 - `MOCK_VALUE_FUNC(int, now, void)` so a no-argument mock is `-Wpedantic` clean before C23
 - Thread-safe call recording (atomics or a lock per mock)
+
+## Manifest package migration
+- [x] Adopt RFC-0024 and validate packaging ([spec](specs/003-manifest-package.md)).

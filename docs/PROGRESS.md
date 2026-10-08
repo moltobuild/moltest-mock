@@ -53,3 +53,11 @@
 - Tests: 21 self-tests (2 new: 7 and 12 arguments, value and void with
   custom_fake); e2e (C17) passes; fmt and lint clean
 - Next: release 0.4.0
+
+## 2026-10-08 — RFC-0024 manifest package
+- Removed the carried recipe; the manifest describes the consumer interface.
+- CI builds an immutable RFC-0024 Molto revision and validates packaging.
+- Release version checks no longer require a recipe.
+- Security: no runtime code, public API or input handling changed.
+- Validation: package check, self-test (21 tests, 587 assertions), consumer e2e and shell syntax checks passed with Clang on macOS.
+- CI bootstrap updated to include the Windows read-only Git object pruning fix.

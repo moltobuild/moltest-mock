@@ -14,3 +14,6 @@ Milestone: M4 - Twelve arguments · Spec: specs/002-twelve-arguments.md (done) �
 [VALIDATION](VALIDATION.md) · [DEVELOPMENT](DEVELOPMENT.md) ·
 [DEPENDENCIES](DEPENDENCIES.md) · [PROGRESS](PROGRESS.md) ·
 [KNOWN_ISSUES](KNOWN_ISSUES.md) · [specs/](specs/) · [adr/](adr/)
+
+## Package migration
+Current task: RFC-0024 ([spec](specs/003-manifest-package.md)); remove the recipe and validate the manifest consumer interface.

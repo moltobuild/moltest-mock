@@ -21,3 +21,6 @@ Same as moltest (decided 2026-10-04):
 | Tool | Why |
 |---|---|
 | molto | build, test, fmt, lint |
+
+The RFC-0024 migration pins moltest to `9e0611007d3b1ccebd589273dd14a7a229265c3c` in [deps] until
+a compatible release tag is published. Consumers must select the same revision.
